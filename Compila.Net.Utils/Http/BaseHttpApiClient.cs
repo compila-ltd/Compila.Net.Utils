@@ -1,0 +1,47 @@
+﻿using System;
+using System.Threading.Tasks;
+
+using RestSharp;
+
+namespace Compila.Net.Utils.Http
+{
+    abstract class BaseHttpApiClient
+    {
+        private readonly RestClient restClient;
+
+        public BaseHttpApiClient(IEndpointData endpointData, bool ignoreSsl = false)
+        {
+            var options = new RestClientOptions
+            {
+                RemoteCertificateValidationCallback = default,
+                BaseUrl = new Uri(endpointData.BaseUrl)
+            };
+
+            if (ignoreSsl)
+                options.RemoteCertificateValidationCallback = (sender, certificate, chain, sslPolicyErrors) => true;
+
+            restClient = new RestClient(options);
+        }
+
+        protected async Task<RestResponse<T>> ExecuteAsync<T>(RestRequest request) where T : new()
+        {
+            request = TransformHeaders(request);
+            var response = await restClient.ExecuteAsync<T>(request);
+
+            return response;
+        }
+
+        protected async Task<RestResponse> ExecuteAsync(RestRequest request)
+        {
+            request = TransformHeaders(request);
+            var response = await restClient.ExecuteAsync(request);
+
+            return response;
+        }
+
+        protected virtual RestRequest TransformHeaders(RestRequest request)
+        {
+            return request;
+        }
+    }
+}
