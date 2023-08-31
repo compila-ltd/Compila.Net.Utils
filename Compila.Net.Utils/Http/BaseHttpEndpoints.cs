@@ -26,14 +26,4 @@
             ApiKey = apiKey;
         }
     }
-
-    public class EndpointService : IEndpointData
-    {
-        public string BaseUrl { get; set; }
-
-        public EndpointService(string serviceUrl)
-        {
-            BaseUrl = serviceUrl;
-        }
-    }
 }
