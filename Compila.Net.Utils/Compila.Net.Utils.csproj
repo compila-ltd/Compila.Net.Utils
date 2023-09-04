@@ -1,18 +1,48 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-	  <TargetFramework>netstandard2.1</TargetFramework>
-	  <Nullable>enable</Nullable>
-	  <RepositoryUrl>https://github.com/compila-ltd/Compila.Net.Utils</RepositoryUrl>
-	  <PackageId>Compila.Net.Utils</PackageId>
-	  <Version>1.0.1</Version>
-	  <Authors>Eyonys Gonzalez Marcaida</Authors>
-	  <Company>COMPILA</Company>
-	  <PackageDescription>Utils for Compila development projects.</PackageDescription>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>netstandard2.1</TargetFramework>
+		<Nullable>enable</Nullable>
 
-  <ItemGroup>
-    <PackageReference Include="RestSharp" Version="110.2.0" />
-  </ItemGroup>
+		<EnablePackageValidation>true</EnablePackageValidation>
+	</PropertyGroup>
+	<PropertyGroup>
+		<GenerateDocumentationFile>True</GenerateDocumentationFile>
+
+		<!-- If all members are not documented, you can disable the compiler warnings -->
+		<NoWarn>$(NoWarn);CS1591</NoWarn>
+	</PropertyGroup>
+	<PropertyGroup>
+		<PackageProjectUrl>https://github.com/compila-ltd/Compila.Net.Utils</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/compila-ltd/Compila.Net.Utils</RepositoryUrl>
+		<PackageId>Compila.Net.Utils</PackageId>
+		<Version>1.0.2</Version>
+		<Authors>Eyonys Gonzalez Marcaida</Authors>
+		<Company>Compila</Company>
+		<PackageDescription>Utils for Compila development projects.</PackageDescription>
+	</PropertyGroup>
+	<PropertyGroup>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+	</PropertyGroup>
+	<PropertyGroup>
+		<PackageIcon>icon.png</PackageIcon>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<!--
+        Add an icon.png next to the csproj:
+        - Supported format: png, jpg
+        - Recommended dimensions: 128x128
+        - Maximum size: 1MB
+    -->
+		<None Include="icon.png" Pack="true" PackagePath=""/>
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="DotNet.ReproducibleBuilds" Version="1.1.1">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="RestSharp" Version="110.2.0" />
+	</ItemGroup>
 
 </Project>
