@@ -45,8 +45,9 @@
 		</PackageReference>
 		<PackageReference Include="RestSharp" Version="110.2.0" />
 	</ItemGroup>
+
 	<ItemGroup>
 		<!-- Add a README.md next to the csproj -->
-		<None Include="README.md" Pack="true" PackagePath=""/>
+		<None Include="README.md" Pack="true" PackagePath="..\"/>
 	</ItemGroup>
 </Project>
