@@ -35,7 +35,7 @@
         - Recommended dimensions: 128x128
         - Maximum size: 1MB
     -->
-		<None Include="icon.png" Pack="true" PackagePath=""/>
+		<None Include="icon.png" Pack="true" PackagePath="" />
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="DotNet.ReproducibleBuilds" Version="1.1.1">
@@ -44,5 +44,8 @@
 		</PackageReference>
 		<PackageReference Include="RestSharp" Version="110.2.0" />
 	</ItemGroup>
-
+	<ItemGroup>
+		<!-- Add a README.md next to the csproj -->
+		<None Include="README.md" Pack="true" PackagePath=""/>
+	</ItemGroup>
 </Project>
