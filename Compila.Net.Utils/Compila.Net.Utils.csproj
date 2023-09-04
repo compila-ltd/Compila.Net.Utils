@@ -20,6 +20,7 @@
 		<Authors>Eyonys Gonzalez Marcaida</Authors>
 		<Company>Compila</Company>
 		<PackageDescription>Utils for Compila development projects.</PackageDescription>
+		<PackageTags>http, rest, api</PackageTags>
 	</PropertyGroup>
 	<PropertyGroup>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
