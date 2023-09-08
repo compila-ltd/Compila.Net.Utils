@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Text;
 
+using Compila.Net.Utils.ServiceResponses;
+
 namespace Compila.Net.Utils
 {
     public static class Extensions
@@ -25,5 +27,15 @@ namespace Compila.Net.Utils
         {
             return Encoding.UTF8.GetString(Convert.FromBase64String(@this));
         }
-    }
+
+		public static TResultType GetResult<TResultType>(this ServiceBaseResponse response)
+		{
+			if (response is ServiceOkResponse<TResultType> okResponse)
+			{
+				return okResponse.Result;
+			}
+
+			throw new InvalidOperationException($"Response is not of type ServiceOkResponse<{nameof(TResultType)}>");
+		}
+	}
 }
