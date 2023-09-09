@@ -16,7 +16,7 @@
 		<PackageProjectUrl>https://github.com/compila-ltd/Compila.Net.Utils</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/compila-ltd/Compila.Net.Utils</RepositoryUrl>
 		<PackageId>Compila.Net.Utils</PackageId>
-		<Version>1.0.3</Version>
+		<Version>1.0.4</Version>
 		<Authors>Eyonys Gonzalez Marcaida</Authors>
 		<Company>Compila</Company>
 		<PackageDescription>Utils for Compila development projects.</PackageDescription>
