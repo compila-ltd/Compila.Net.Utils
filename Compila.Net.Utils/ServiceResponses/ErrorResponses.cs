@@ -6,6 +6,17 @@
 		public ServiceBadRequestResponse(string message) : base(false) => Message = message;
 	}
 
+	public class ServiceBadRequestResponseWithErrorCode : ServiceBaseResponse
+	{
+		public string Message { get; set; }
+		public string ErrorCode { get; set; }
+		public ServiceBadRequestResponseWithErrorCode(string message, string errorCode) : base(false)
+		{
+			Message = message;
+			ErrorCode = errorCode;
+		}
+	}
+
 	public class ServiceInternalServerError : ServiceBaseResponse
 	{
 		public string Message { get; set; }
