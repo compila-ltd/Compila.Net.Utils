@@ -6,21 +6,21 @@ namespace Compila.Net.Utils.Entity
     {
         public Identity()
         {
-            this.Id = Guid.NewGuid().ToString();
+            Id = Guid.NewGuid();
         }
 
-        public Identity(string id)
+        public Identity(Guid id)
         {
-            this.Id = id;
+            Id = id;
         }
 
-        public string Id { get; set; }
+        public Guid Id { get; set; }
 
         public bool Equals(Identity id)
         {
-            if (object.ReferenceEquals(this, id)) return true;
-            if (object.ReferenceEquals(null, id)) return false;
-            return this.Id.Equals(id.Id);
+            if (ReferenceEquals(this, id)) return true;
+            if (ReferenceEquals(null, id)) return false;
+            return Id.Equals(id.Id);
         }
 
         public override bool Equals(object anotherObject)
@@ -30,17 +30,17 @@ namespace Compila.Net.Utils.Entity
 
         public override int GetHashCode()
         {
-            return (this.GetType().GetHashCode() * 907) + this.Id.GetHashCode();
+            return (GetType().GetHashCode() * 907) + Id.GetHashCode();
         }
 
         public override string ToString()
         {
-            return this.GetType().Name + " [Id=" + Id + "]";
+            return GetType().Name + " [Id=" + Id + "]";
         }
     }
 
     public interface IIdentity
     {
-        string Id { get; set; }
+        Guid Id { get; set; }
     }
 }
