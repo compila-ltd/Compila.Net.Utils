@@ -4,12 +4,8 @@ using System.Text.Json.Serialization;
 
 namespace Compila.Net.Utils.Rest
 {
-    public class ErrorDetails
+    public class ErrorDetails : ErrorDetailsBase
     {
-        [JsonPropertyName("statusCode")]
-        public int StatusCode { get; set; }
-        [JsonPropertyName("message")]
-        public string? Message { get; set; }
         [JsonPropertyName("errors")]
         public List<string> Errors { get; set; } = new List<string>();
 
