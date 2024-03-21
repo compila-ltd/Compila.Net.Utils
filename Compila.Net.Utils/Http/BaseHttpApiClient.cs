@@ -5,7 +5,8 @@ using RestSharp;
 
 namespace Compila.Net.Utils.Http
 {
-	public abstract class BaseHttpApiClient
+    [Obsolete]
+    public abstract class BaseHttpApiClient
 	{
 		private readonly RestClient restClient;
 

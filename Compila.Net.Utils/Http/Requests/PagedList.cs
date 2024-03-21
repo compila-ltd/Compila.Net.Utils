@@ -4,6 +4,7 @@ using System.Linq;
 
 namespace Compila.Net.Utils.Http.Requests
 {
+    [Obsolete]
     public class PagedList<T> : List<T>
     {
         public RequestMetadata Metadata { get; set; }

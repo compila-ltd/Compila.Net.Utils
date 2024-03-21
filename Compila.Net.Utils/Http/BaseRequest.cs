@@ -1,7 +1,10 @@
-﻿using RestSharp;
+﻿using System;
+
+using RestSharp;
 
 namespace Compila.Net.Utils.Http
 {
+	[Obsolete]
 	public class BaseRequest
 	{
 		public RestRequest RestRequest { get; set; }

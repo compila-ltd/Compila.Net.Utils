@@ -1,10 +1,14 @@
-﻿namespace Compila.Net.Utils.Http
+﻿using System;
+
+namespace Compila.Net.Utils.Http
 {
+    [Obsolete]
     public interface IEndpointData
     {
         string BaseUrl { get; set; }
     }
 
+    [Obsolete]
     public class EndpointSite : IEndpointData
     {
         public string BaseUrl { get; set; }
@@ -15,6 +19,7 @@
         }
     }
 
+    [Obsolete]
     public class ProtectedEndpointSite : IEndpointData
     {
         public string BaseUrl { get; set; }
