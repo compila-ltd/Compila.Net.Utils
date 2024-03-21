@@ -2,9 +2,9 @@
 
 namespace Compila.Net.Utils.Exceptions
 {
-    public class NullArgumentsException : ArgumentNullException
+    public class NullParameterException : ArgumentNullException
     {
-        public NullArgumentsException(string paramName) : base(paramName: paramName, $"{paramName} can't be null.") { }
+        public NullParameterException(string paramName) : base(paramName: paramName, $"{paramName} can't be null.") { }
     }
 
     public class InternalNullArgumentException : ArgumentNullException
