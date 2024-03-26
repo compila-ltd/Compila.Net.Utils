@@ -2,7 +2,6 @@
 
 namespace Compila.Net.Utils.Entity
 {
-    [Obsolete]
     public abstract class Identity : IEquatable<Identity>, IIdentity
     {
         public Identity()

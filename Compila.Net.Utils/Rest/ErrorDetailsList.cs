@@ -4,7 +4,7 @@ using System.Text.Json.Serialization;
 
 namespace Compila.Net.Utils.Rest
 {
-    public class ErrorDetails : ErrorDetailsBase
+    public class ErrorDetailsList : ErrorDetailsBase
     {
         [JsonPropertyName("errors")]
         public List<string> Errors { get; set; } = new List<string>();

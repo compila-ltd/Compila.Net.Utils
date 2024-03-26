@@ -3,7 +3,6 @@ using System.Text.Json.Serialization;
 
 namespace Compila.Net.Utils.Http.Requests
 {
-    [Obsolete]
     public class RequestMetadata
     {
         [JsonPropertyName("currentPage")]

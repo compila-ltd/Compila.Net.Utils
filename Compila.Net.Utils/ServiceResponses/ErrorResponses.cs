@@ -64,13 +64,11 @@ namespace Compila.Net.Utils.ServiceResponses
 
     public class ServiceErrorResponse : ServiceBaseResponse
     {
-        public string Message { get; set; }
-        public int ErrorCode { get; set; }
+        public ErrorDetailsInResponse ErrorDetails { get; }
 
-        public ServiceErrorResponse(string message, int errorCode) : base(false)
+        public ServiceErrorResponse(ErrorDetailsInResponse errorDetailsInResponse) : base(false)
         {
-            Message = message;
-            ErrorCode = errorCode;
+            ErrorDetails = errorDetailsInResponse;
         }
     }
 }
