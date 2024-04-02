@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Compila.Net.Utils.ServiceResponses
+﻿namespace Compila.Net.Utils.ServiceResponses
 {
 	public static class ServiceBaseResponseExtensions
 	{

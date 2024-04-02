@@ -1,10 +1,9 @@
-﻿using System;
-using System.Security.Cryptography;
+﻿using System.Security.Cryptography;
 using System.Text;
 
 namespace Compila.Net.Utils
 {
-    public static class RandomStringGenerator
+	public static class RandomStringGenerator
     {
         public static string GenerateRandomToken(int length)
         {

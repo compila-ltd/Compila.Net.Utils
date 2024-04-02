@@ -1,9 +1,8 @@
-﻿using System;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
-namespace Compila.Net.Utils.Http.Requests
+namespace Compila.Net.Utils.Http.RequestsParameters
 {
-    public class RequestMetadata
+	public class RequestMetadata
     {
         [JsonPropertyName("currentPage")]
         public int CurrentPage { get; set; }

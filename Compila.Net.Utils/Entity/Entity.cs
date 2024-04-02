@@ -1,8 +1,6 @@
-﻿using System;
-
-namespace Compila.Net.Utils.Entity
+﻿namespace Compila.Net.Utils.Entity
 {
-    public abstract class Entity
+	public abstract class Entity
     {
         public Guid Id { get; set; }
 

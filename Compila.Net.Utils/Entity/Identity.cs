@@ -1,8 +1,6 @@
-﻿using System;
-
-namespace Compila.Net.Utils.Entity
+﻿namespace Compila.Net.Utils.Entity
 {
-    public abstract class Identity : IEquatable<Identity>, IIdentity
+	public abstract class Identity : IEquatable<Identity>, IIdentity
     {
         public Identity()
         {

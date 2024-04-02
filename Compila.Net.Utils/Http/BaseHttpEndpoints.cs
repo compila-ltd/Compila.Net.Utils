@@ -1,8 +1,6 @@
-﻿using System;
-
-namespace Compila.Net.Utils.Http
+﻿namespace Compila.Net.Utils.Http
 {
-    public interface IEndpointData
+	public interface IEndpointData
     {
         string BaseUrl { get; set; }
     }

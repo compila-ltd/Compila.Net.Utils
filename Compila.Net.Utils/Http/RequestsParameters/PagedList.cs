@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace Compila.Net.Utils.Http.Requests
+﻿namespace Compila.Net.Utils.Http.RequestsParameters
 {
-    public class PagedList<T> : List<T>
+	public class PagedList<T> : List<T>
     {
         public RequestMetadata Metadata { get; set; }
 

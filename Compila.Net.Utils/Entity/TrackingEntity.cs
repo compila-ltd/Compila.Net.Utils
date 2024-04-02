@@ -1,8 +1,6 @@
-﻿using System;
-
-namespace Compila.Net.Utils.Entity
+﻿namespace Compila.Net.Utils.Entity
 {
-    public abstract class TrackingEntity : Entity
+	public abstract class TrackingEntity : Entity
     {
         public long CreatedAt { get; set; }
         public long UpdatedAt { get; set; }

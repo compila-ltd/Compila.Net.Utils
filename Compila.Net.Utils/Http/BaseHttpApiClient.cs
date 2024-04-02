@@ -1,11 +1,8 @@
-﻿using System;
-using System.Threading.Tasks;
-
-using RestSharp;
+﻿using RestSharp;
 
 namespace Compila.Net.Utils.Http
 {
-    public abstract class BaseHttpApiClient
+	public abstract class BaseHttpApiClient
     {
         private readonly RestClient restClient;
 

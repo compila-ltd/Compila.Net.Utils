@@ -1,8 +1,6 @@
-﻿using System.Collections.Generic;
-
-namespace Compila.Net.Utils.Errors
+﻿namespace Compila.Net.Utils.Errors
 {
-    public abstract class ErrorCodes
+	public abstract class ErrorCodes
     {
         public ErrorDictionary AuthenticationErrors { get; set; } = new ErrorDictionary();
 

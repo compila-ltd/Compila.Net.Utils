@@ -1,8 +1,6 @@
-﻿using System;
-
-namespace Compila.Net.Utils.Exceptions
+﻿namespace Compila.Net.Utils.Exceptions
 {
-    public class NullParameterException : ArgumentNullException
+	public class NullParameterException : ArgumentNullException
     {
         public NullParameterException(string paramName) : base(paramName: paramName, $"{paramName} can't be null.") { }
     }

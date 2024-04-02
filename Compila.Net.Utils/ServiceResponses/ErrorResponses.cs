@@ -2,7 +2,7 @@
 
 namespace Compila.Net.Utils.ServiceResponses
 {
-    public class ServiceBadRequestResponse : ServiceBaseResponse
+	public class ServiceBadRequestResponse : ServiceBaseResponse
     {
         public string Message { get; set; }
         public ServiceBadRequestResponse(string message) : base(false) => Message = message;

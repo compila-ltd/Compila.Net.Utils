@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Compila.Net.Utils.Http.Requests
+﻿namespace Compila.Net.Utils.Http.RequestsParameters
 {
-    public abstract class RequestParametersBase
+	public abstract class RequestParametersBase
     {
         const int maxPageSize = 1000;
         public int PageNumber { get; set; } = 1;
