@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Text;
 
-using Compila.Net.Utils.ServiceResponses;
-
 namespace Compila.Net.Utils
 {
-    public static class Extensions
+	public static class Extensions
     {
         public static decimal TruncateDecimal(this decimal @this, int places)
         {
@@ -26,16 +24,6 @@ namespace Compila.Net.Utils
         public static string Base64Decode(this string @this)
         {
             return Encoding.UTF8.GetString(Convert.FromBase64String(@this));
-        }
-
-        public static TResultType GetResult<TResultType>(this ServiceBaseResponse response)
-        {
-            if (response is ServiceOkResponse<TResultType> okResponse)
-            {
-                return okResponse.Result;
-            }
-
-            throw new InvalidOperationException($"Response is not of type ServiceOkResponse<{nameof(TResultType)}>");
         }
     }
 }

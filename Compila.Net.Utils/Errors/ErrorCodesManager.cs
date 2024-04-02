@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Compila.Net.Utils.Rest
+namespace Compila.Net.Utils.Errors
 {
     public abstract class ErrorCodes
     {
@@ -25,7 +25,7 @@ namespace Compila.Net.Utils.Rest
 
     public class ErrorDictionary : Dictionary<string, string>
     {
-        public string GetError(ErrorDetailsInResponse errorDetails)
+        public string GetError(ErrorDetailsWithCode errorDetails)
         {
             return GetError(errorDetails.ErrorCode ?? "");
         }

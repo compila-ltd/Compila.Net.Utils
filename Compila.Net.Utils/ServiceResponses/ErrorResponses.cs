@@ -1,4 +1,4 @@
-﻿using Compila.Net.Utils.Rest;
+﻿using Compila.Net.Utils.Errors;
 
 namespace Compila.Net.Utils.ServiceResponses
 {
@@ -10,8 +10,8 @@ namespace Compila.Net.Utils.ServiceResponses
 
     public class ServiceBadRequestResponseWithErrorCode : ServiceBadRequestResponse
     {
-        public ErrorDetailsInResponse ErrorDetails { get; }
-        public ServiceBadRequestResponseWithErrorCode(ErrorDetailsInResponse errorDetails) : base(errorDetails.Message ?? "No message.")
+        public ErrorDetailsWithCode ErrorDetails { get; }
+        public ServiceBadRequestResponseWithErrorCode(ErrorDetailsWithCode errorDetails) : base(errorDetails.Message ?? "No message.")
         {
             ErrorDetails = errorDetails;
         }
@@ -25,8 +25,8 @@ namespace Compila.Net.Utils.ServiceResponses
 
     public class ServiceInternalServerErrorWithErrorCode : ServiceInternalServerError
     {
-        public ErrorDetailsInResponse ErrorDetails { get; }
-        public ServiceInternalServerErrorWithErrorCode(ErrorDetailsInResponse errorDetails) : base(errorDetails.Message ?? "No message")
+        public ErrorDetailsWithCode ErrorDetails { get; }
+        public ServiceInternalServerErrorWithErrorCode(ErrorDetailsWithCode errorDetails) : base(errorDetails.Message ?? "No message")
         {
             ErrorDetails = errorDetails;
         }
@@ -64,11 +64,20 @@ namespace Compila.Net.Utils.ServiceResponses
 
     public class ServiceErrorResponse : ServiceBaseResponse
     {
-        public ErrorDetailsInResponse ErrorDetails { get; }
-
-        public ServiceErrorResponse(ErrorDetailsInResponse errorDetailsInResponse) : base(false)
+        public ErrorDetails ErrorDetails { get; set; }
+        public ServiceErrorResponse(ErrorDetails errorDetailsInResponse) : base(false)
         {
             ErrorDetails = errorDetailsInResponse;
         }
     }
+
+	public class ServiceErrorResponseWithErrorCode : ServiceBaseResponse
+	{
+		public ErrorDetailsWithCode ErrorDetails { get; }
+
+		public ServiceErrorResponseWithErrorCode(ErrorDetailsWithCode errorDetailsInResponse) : base(false)
+		{
+			ErrorDetails = errorDetailsInResponse;
+		}
+	}
 }

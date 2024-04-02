@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>netstandard2.1</TargetFramework>
+		<TargetFramework>net8.0</TargetFramework>
 		<Nullable>enable</Nullable>
 		<EnablePackageValidation>true</EnablePackageValidation>
 	</PropertyGroup>
@@ -15,7 +15,7 @@
 		<PackageProjectUrl>https://github.com/compila-ltd/Compila.Net.Utils</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/compila-ltd/Compila.Net.Utils</RepositoryUrl>
 		<PackageId>Compila.Net.Utils</PackageId>
-		<Version>1.0.15</Version>
+		<Version>1.0.16</Version>
 		<Authors>Eyonys Gonzalez Marcaida</Authors>
 		<Company>Compila</Company>
 		<PackageDescription>Utils for Compila development projects.</PackageDescription>
@@ -43,6 +43,7 @@
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
 		<PackageReference Include="RestSharp" Version="110.2.0" />
+		<PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
 	</ItemGroup>
 
 	<ItemGroup>

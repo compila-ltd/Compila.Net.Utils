@@ -2,7 +2,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Compila.Net.Utils.Rest
+namespace Compila.Net.Utils.Errors
 {
 	public abstract class ErrorDetailsBase
 	{
@@ -33,11 +33,14 @@ namespace Compila.Net.Utils.Rest
 		public ErrorDetailsList(string message, int statusCode) : base(message, statusCode) { }
 	}
 
-	public class ErrorDetailsInResponse : ErrorDetailsBase
+	public class ErrorDetailsWithCode : ErrorDetailsBase
 	{
 		[JsonPropertyName("errorCode")]
 		public string? ErrorCode { get; set; }
 
-		public ErrorDetailsInResponse(string message, int statusCode) : base(message, statusCode) { }
+		public ErrorDetailsWithCode(string message, int statusCode, string errorCode) : base(message, statusCode)
+		{
+			ErrorCode = errorCode;
+		}
 	}
 }
