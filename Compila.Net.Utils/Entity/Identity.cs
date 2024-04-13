@@ -1,6 +1,11 @@
 ﻿namespace Compila.Net.Utils.Entity
 {
-	public abstract class Identity : IEquatable<Identity>, IIdentity
+    public interface IIdentity : IEntity
+    {
+        Guid Id { get; set; }
+    }
+
+    public abstract class Identity : IEquatable<Identity>, IIdentity
     {
         public Identity()
         {
@@ -35,10 +40,5 @@
         {
             return GetType().Name + " [Id=" + Id + "]";
         }
-    }
-
-    public interface IIdentity
-    {
-        Guid Id { get; set; }
     }
 }
