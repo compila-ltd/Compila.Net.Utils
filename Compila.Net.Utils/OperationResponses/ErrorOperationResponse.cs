@@ -1,10 +1,10 @@
 ﻿namespace Compila.Net.Utils.OperationResponses
 {
-    public class ErrorOperation : OperationBaseResponse
+    public class ErrorOperationResponse : OperationBaseResponse
     {
         public string ErrorMessage { get; set; }
 
-        public ErrorOperation(string errorMessage) : base(false)
+        public ErrorOperationResponse(string errorMessage) : base(false)
         {
             ErrorMessage = errorMessage;
         }
