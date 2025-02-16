@@ -11,13 +11,16 @@
 
 		<!-- If all members are not documented, you can disable the compiler warnings -->
 		<NoWarn>$(NoWarn);CS1591</NoWarn>
+
+		<!--No warnings for primary contructors -->
+		<NoWarn>$(NoWarn);IDE0290</NoWarn>
 	</PropertyGroup>
 	<PropertyGroup>
 		<PackageProjectUrl>https://github.com/compila-ltd/Compila.Net.Utils</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/compila-ltd/Compila.Net.Utils</RepositoryUrl>
 		<RepositoryBranch>master</RepositoryBranch>
 		<PackageId>Compila.Net.Utils</PackageId>
-		<Version>1.0.24</Version>
+		<Version>1.0.25</Version>
 		<Authors>Eyonys Gonzalez Marcaida</Authors>
 		<Company>Compila</Company>
 		<PackageDescription>Utils for Compila development projects.</PackageDescription>
