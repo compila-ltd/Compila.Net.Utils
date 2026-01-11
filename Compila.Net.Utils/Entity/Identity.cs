@@ -19,14 +19,14 @@
 
         public Guid Id { get; set; }
 
-        public bool Equals(Identity id)
+        public bool Equals(Identity? id)
         {
             if (ReferenceEquals(this, id)) return true;
-            if (ReferenceEquals(null, id)) return false;
+            if (id is null) return false;
             return Id.Equals(id.Id);
         }
 
-        public override bool Equals(object anotherObject)
+        public override bool Equals(object? anotherObject)
         {
             return Equals(anotherObject as Identity ?? throw new Exception("Object to compare is not of Identity type."));
         }
