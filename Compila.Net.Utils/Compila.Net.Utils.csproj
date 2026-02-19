@@ -20,10 +20,10 @@
 		<RepositoryUrl>https://github.com/compila-ltd/Compila.Net.Utils</RepositoryUrl>
 		<RepositoryBranch>master</RepositoryBranch>
 		<PackageId>Compila.Net.Utils</PackageId>
-		<Version>1.0.26</Version>
+		<Version>1.1.30</Version>
 		<Authors>Eyonys Gonzalez Marcaida</Authors>
 		<Company>Compila</Company>
-		<PackageDescription>Utils for Compila development projects.</PackageDescription>
+		<PackageDescription>Utils for Compila development projects targeting NET9.</PackageDescription>
 		<PackageTags>http, rest, api</PackageTags>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 	</PropertyGroup>
