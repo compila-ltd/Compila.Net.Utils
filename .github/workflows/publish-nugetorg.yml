@@ -4,13 +4,8 @@ name: publish
 on:
   workflow_dispatch: # Allow running the workflow manually from the GitHub UI
   push:
-    branches:
-      - 'net8'       # Run the workflow when pushing to net8 branch
-      - 'net9'       # Run the workflow when pushing to net9 branch
-      - 'net10'      # Run the workflow when pushing to net10 branch
-  pull_request:
-    branches:
-      - '*'          # Run the workflow for all pull requests
+    tags:
+      - 'v*'         # Run the workflow when pushing tags
   release:
     types:
       - published    # Run the workflow when a new GitHub release is published
@@ -25,20 +20,21 @@ defaults:
     shell: pwsh
 
 jobs:
-  create_nuget:
+  determine_framework:
     runs-on: ubuntu-latest
+    outputs:
+      target_framework: ${{ steps.target_framework.outputs.target_framework }}
+      dotnet_version: ${{ steps.target_framework.outputs.dotnet_version }}
     steps:
     - uses: actions/checkout@v4
-      with:
-        fetch-depth: 0 # Get all history to allow automatic versioning using MinVer
 
     # Determine target framework based on branch or release version
     - name: Determine Target Framework
       id: target_framework
       run: |
         $branch = "${{ github.ref_name }}"
-        $targetFramework = "net9.0"
-        $dotnetVersion = "9.0.101"
+        $targetFramework = "net10.0"
+        $dotnetVersion = "10.0.x"
 
         # Check if it's a release event
         if ("${{ github.event_name }}" -eq "release") {
@@ -46,7 +42,12 @@ jobs:
           Write-Host "Release version: $version"
 
           # Determine framework based on version pattern
-          if ($version -match "^v?1\.0\.") {
+          if ($version -match "^v?1\.10\.") {
+            $targetFramework = "net10.0"
+            $dotnetVersion = "10.0.x"
+            Write-Host "Version 1.10.x detected - targeting .NET 10"
+          }
+          elseif ($version -match "^v?1\.0\.") {
             $targetFramework = "net8.0"
             $dotnetVersion = "8.0.x"
             Write-Host "Version 1.0.x detected - targeting .NET 8"
@@ -56,27 +57,30 @@ jobs:
             $dotnetVersion = "9.0.101"
             Write-Host "Version 1.1.x detected - targeting .NET 9"
           }
-          elseif ($version -match "^v?1\.2\.") {
-            $targetFramework = "net10.0"
-            $dotnetVersion = "10.0.x"
-            Write-Host "Version 1.2.x detected - targeting .NET 10"
-          }
         }
         else {
-          # Determine framework based on branch name
-          Write-Host "Branch: $branch"
+          # Get the branch that contains this tag/commit
+          Write-Host "Tag/Branch: $branch"
+          $branchName = git branch -r --contains HEAD | Select-String -Pattern "origin/(net\d+)" | ForEach-Object { $_.Matches.Groups[1].Value } | Select-Object -First 1
 
-          if ($branch -eq "net8" -or $branch -eq "refs/heads/net8") {
+          if (-not $branchName) {
+            # Fallback: check current branch
+            $branchName = git rev-parse --abbrev-ref HEAD
+          }
+
+          Write-Host "Detected branch: $branchName"
+
+          if ($branchName -eq "net8") {
             $targetFramework = "net8.0"
             $dotnetVersion = "8.0.x"
             Write-Host "net8 branch detected - targeting .NET 8"
           }
-          elseif ($branch -eq "net9" -or $branch -eq "refs/heads/net9") {
+          elseif ($branchName -eq "net9") {
             $targetFramework = "net9.0"
             $dotnetVersion = "9.0.101"
             Write-Host "net9 branch detected - targeting .NET 9"
           }
-          elseif ($branch -eq "net10" -or $branch -eq "refs/heads/net10") {
+          elseif ($branchName -eq "net10") {
             $targetFramework = "net10.0"
             $dotnetVersion = "10.0.x"
             Write-Host "net10 branch detected - targeting .NET 10"
@@ -89,17 +93,25 @@ jobs:
         "target_framework=$targetFramework" >> $env:GITHUB_OUTPUT
         "dotnet_version=$dotnetVersion" >> $env:GITHUB_OUTPUT
 
+  create_nuget:
+    needs: [ determine_framework ]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0 # Get all history to allow automatic versioning using MinVer
+
     # Install the .NET SDK based on detected version
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: ${{ steps.target_framework.outputs.dotnet_version }}
+        dotnet-version: ${{ needs.determine_framework.outputs.dotnet_version }}
 
     # Update TargetFramework in csproj
     - name: Update Target Framework
       run: |
         $csprojPath = "Compila.Net.Utils/Compila.Net.Utils.csproj"
-        $targetFramework = "${{ steps.target_framework.outputs.target_framework }}"
+        $targetFramework = "${{ needs.determine_framework.outputs.target_framework }}"
 
         Write-Host "Updating TargetFramework to $targetFramework in $csprojPath"
 
@@ -123,26 +135,13 @@ jobs:
 
   validate_nuget:
     runs-on: ubuntu-latest
-    needs: [ create_nuget ]
+    needs: [ determine_framework, create_nuget ]
     steps:
-      # Install multiple .NET SDK versions to support all target frameworks
-      - name: Setup .NET 8
+      # Install only the required .NET SDK version
+      - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: 8.0.x
-        continue-on-error: true
-
-      - name: Setup .NET 9
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: 9.0.x
-        continue-on-error: true
-
-      - name: Setup .NET 10
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: 10.0.x
-        continue-on-error: true
+          dotnet-version: ${{ needs.determine_framework.outputs.dotnet_version }}
 
       # Download the NuGet package created in the previous job
       - uses: actions/download-artifact@v4
@@ -161,28 +160,16 @@ jobs:
         run: meziantou.validate-nuget-package (Get-ChildItem "${{ env.NuGetDirectory }}/*.nupkg") --excluded-rules Symbols
 
   run_test:
+    needs: [ determine_framework ]
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
 
-    # Install multiple .NET SDK versions to support all target frameworks
-    - name: Setup .NET 8
+    # Install only the required .NET SDK version
+    - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: 8.0.x
-      continue-on-error: true
-
-    - name: Setup .NET 9
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: 9.0.x
-      continue-on-error: true
-
-    - name: Setup .NET 10
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: 10.0.x
-      continue-on-error: true
+        dotnet-version: ${{ needs.determine_framework.outputs.dotnet_version }}
 
     - name: Run tests
       run: dotnet test --configuration Release
@@ -193,7 +180,7 @@ jobs:
     # You can update this logic if you want to manage releases differently
     if: github.event_name == 'release'
     runs-on: ubuntu-latest
-    needs: [ validate_nuget, run_test ]
+    needs: [ determine_framework, validate_nuget, run_test ]
     steps:
       # Download the NuGet package created in the previous job
       - uses: actions/download-artifact@v4
@@ -201,24 +188,11 @@ jobs:
           name: nuget
           path: ${{ env.NuGetDirectory }}
 
-      # Install multiple .NET SDK versions to support all target frameworks
-      - name: Setup .NET 8
+      # Install only the required .NET SDK version
+      - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: 8.0.x
-        continue-on-error: true
-
-      - name: Setup .NET 9
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: 9.0.x
-        continue-on-error: true
-
-      - name: Setup .NET 10
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: 10.0.x
-        continue-on-error: true
+          dotnet-version: ${{ needs.determine_framework.outputs.dotnet_version }}
 
       # Publish all NuGet packages to NuGet.org
       # Use --skip-duplicate to prevent errors if a package with the same version already exists.
